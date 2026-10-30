@@ -1,407 +1,612 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prostoti | প্রস্তুতি — Practice. Exam. Succeed.</title>
-<meta name="description" content="Prostoti is a bilingual learning platform with quizzes, a question bank, mock exams, PDF notes and a slide generator.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Prostoti | প্রস্তুতি</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2316a34a'/%3E%3Ctext x='32' y='44' font-size='32' font-weight='700' text-anchor='middle' fill='white'%3E%E0%A6%AA%E0%A7%8D%E0%A6%B0%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#0b1220; --navy:#0f1f4a; --blue:#2563eb; --blue-d:#1d4ed8; --teal:#0ea5a4;
-    --bg:#f6f8fc; --card:#ffffff; --line:#e4e9f2; --muted:#5b6678; --soft:#eef3ff;
-    --err:#c2362f; --ok:#15803d; --radius:16px;
-    --shadow:0 10px 30px rgba(15,31,74,.08);
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;font-family:'Inter','Noto Sans Bengali',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
-  button{font-family:inherit;cursor:pointer}
-  .hidden{display:none!important}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+:root{--bg:#07070c;--card:#12121a;--line:#262633;--text:#f4f4f8;--muted:#a3a3b5;--green:#3fa564;--green2:#2d7d4a}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'Hind Siliguri',system-ui,sans-serif;min-height:100vh}
+header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;background:#fff;color:#111;position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:21px;white-space:nowrap}
+.right{display:flex;align-items:center;gap:8px}
+.lang{display:flex;border:1px solid #ccc;border-radius:999px;overflow:hidden}
+.lang button{border:0;background:transparent;padding:6px 10px;font:600 13px inherit;font-family:inherit;color:#333;cursor:pointer;white-space:nowrap}
+.lang button.on{background:#111;color:#fff}
+.login{background:var(--green);color:#fff;border:0;border-bottom:3px solid var(--green2);border-radius:10px;padding:8px 14px;font:600 14px inherit;font-family:inherit;white-space:nowrap;cursor:pointer;text-decoration:none}
+.hero{text-align:center;padding:36px 16px 20px;background:radial-gradient(ellipse at 50% 0,#5a1a1a55,transparent 65%)}
+.hero h1{font-size:30px;line-height:1.3;background:linear-gradient(90deg,#ffb86b,#fff,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:10px;color:var(--muted);font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:12px 14px}
+.card{position:relative;background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:10px 6px 12px;text-align:center;text-decoration:none;color:var(--text);display:block;transition:transform .1s}
+.card:active{transform:scale(.96)}
+.icon{height:72px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:8px}
+.card b{display:block;font-size:13.5px;line-height:1.25;font-weight:600;padding:0 2px}
+.c1{background:linear-gradient(135deg,#7dd3fc,#6366f1)}
+.c2{background:linear-gradient(135deg,#86efac,#16a34a)}
+.c3{background:linear-gradient(135deg,#fdba74,#ea580c)}
+.c4{background:linear-gradient(135deg,#f9a8d4,#db2777)}
+.c5{background:linear-gradient(135deg,#fde68a,#d97706)}
+.c6{background:linear-gradient(135deg,#c4b5fd,#7c3aed)}
+.pro{position:absolute;top:6px;right:6px;background:#111c;border:1px solid #ffd76a;color:#ffd76a;font-size:10px;font-weight:700;padding:1px 6px;border-radius:999px}
+.cta{display:flex;justify-content:center;padding:22px 14px 8px}
+.cta a{background:var(--green);color:#fff;text-decoration:none;font-weight:600;font-size:17px;padding:14px 28px;border-radius:999px}
+.chat{position:fixed;right:16px;bottom:18px;width:54px;height:54px;border-radius:50%;background:var(--green);border:0;font-size:24px;box-shadow:0 6px 18px #0008;cursor:pointer}
+.overlay{position:fixed;inset:0;background:#000a;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.overlay.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;background:#15151f;border-top:1.5px solid var(--line);border-radius:24px 24px 0 0;padding:10px 16px 22px;transform:translateY(105%);transition:transform .25s;z-index:21;max-width:560px;margin:0 auto}
+.sheet.show{transform:translateY(0)}
+.grab{width:42px;height:4px;border-radius:4px;background:#444;margin:0 auto 14px}
+.sheet h3{text-align:center;font-size:19px;margin-bottom:14px}
+.opt{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;margin-bottom:10px;text-decoration:none;color:#fff}
+.opt .oi{font-size:28px}
+.opt b{display:block;font-size:17px}
+.opt small{display:block;font-size:13px;opacity:.85;margin-top:2px}
+.opt.free{background:var(--green);border-bottom:3px solid var(--green2)}
+.opt.prem{background:linear-gradient(135deg,#f59e0b,#b45309);border-bottom:3px solid #78350f}
+.cancel{width:100%;background:transparent;border:1px solid var(--line);color:var(--muted);padding:11px;border-radius:14px;font:500 15px inherit;font-family:inherit;cursor:pointer}
+section.blk{padding:26px 14px 6px;max-width:640px;margin:0 auto}
+section.blk h2{font-size:22px;text-align:center;margin-bottom:6px}
+section.blk .sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:18px 14px 4px;max-width:640px;margin:0 auto}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 6px;text-align:center}
+.stat b{display:block;font-size:22px;color:#ffd76a}
+.stat span{font-size:12.5px;color:var(--muted)}
+.steps{display:grid;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.step i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700}
+.step b{display:block;font-size:16px}
+.step small{color:var(--muted);font-size:13.5px}
+.qbox{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.qmeta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.qbox h4{font-size:17px;line-height:1.5;margin-bottom:12px}
+.qo{display:block;width:100%;text-align:left;background:#1c1c28;border:1.5px solid var(--line);color:var(--text);padding:11px 12px;border-radius:12px;margin-bottom:8px;font:500 15px inherit;font-family:inherit;cursor:pointer}
+.qo.ok{background:#14532d;border-color:#4ade80}
+.qo.bad{background:#5b1a1a;border-color:#f87171}
+.expl{display:none;margin-top:6px;background:#1c1c28;border-left:3px solid #ffd76a;border-radius:8px;padding:10px 12px;font-size:14px;color:#ddd}
+.expl.show{display:block}
+.plans{display:grid;gap:12px}
+.plan{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:18px;position:relative}
+.plan.hot{border-color:#ffd76a;box-shadow:0 0 0 1px #ffd76a55}
+.plan .tag{position:absolute;top:-11px;right:16px;background:#ffd76a;color:#111;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px}
+.plan h3{font-size:18px}
+.plan .price{font-size:30px;font-weight:700;margin:6px 0 10px}
+.plan .price small{font-size:14px;color:var(--muted);font-weight:400}
+.plan ul{list-style:none;margin-bottom:14px}
+.plan li{padding:4px 0;font-size:14.5px}
+.plan li::before{content:"✓ ";color:#4ade80;font-weight:700}
+.plan li.no{color:#777}
+.plan li.no::before{content:"✕ ";color:#777}
+.plan a{display:block;text-align:center;text-decoration:none;color:#fff;background:#2a2a38;padding:12px;border-radius:12px;font-weight:600}
+.plan.hot a{background:linear-gradient(135deg,#f59e0b,#b45309)}
+.note{text-align:center;font-size:12px;color:#777;margin-top:10px}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px}
+summary{font-weight:600;cursor:pointer;font-size:15.5px}
+details p{margin-top:8px;color:var(--muted);font-size:14.5px;line-height:1.6}
+footer{margin-top:34px;border-top:1px solid var(--line);padding:22px 14px 100px;text-align:center;color:var(--muted);font-size:13.5px}
+footer .links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:10px}
+footer a{color:var(--muted);text-decoration:none}
+@media(min-width:700px){.grid{max-width:640px;margin:0 auto}}
 
-  /* ---------- Header ---------- */
-  header.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .bar{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.01em;color:var(--navy);border:0;background:none;padding:0}
-  .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--teal));display:grid;place-items:center;color:#fff}
-  .brand small{font-weight:600;color:var(--muted);font-size:13px;margin-left:2px}
-  nav.links{display:flex;gap:26px;font-size:15px;font-weight:500;color:var(--muted)}
-  nav.links a:hover{color:var(--blue)}
-  .actions{display:flex;align-items:center;gap:10px}
-  .lang{display:inline-flex;background:var(--soft);border-radius:999px;padding:3px}
-  .lang button{border:0;background:none;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted)}
-  .lang button.on{background:#fff;color:var(--blue);box-shadow:0 1px 4px rgba(15,31,74,.15)}
-  .btn{border:0;border-radius:12px;padding:11px 20px;font-size:15px;font-weight:600;transition:.15s}
-  .btn-primary{background:var(--blue);color:#fff}
-  .btn-primary:hover{background:var(--blue-d)}
-  .btn-primary:disabled{opacity:.6;cursor:wait}
-  .btn-ghost{background:transparent;color:var(--navy)}
-  .btn-ghost:hover{background:var(--soft)}
-  .btn-light{background:#fff;color:var(--navy)}
-  .btn-line{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.45)}
-  .btn-line:hover{background:rgba(255,255,255,.1)}
-  .btn-lg{padding:14px 26px;font-size:16px;border-radius:14px}
+:root{--serif:'Noto Serif Bengali','Hind Siliguri',serif}
+.mk{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#4ade80,#15803d);color:#fff;font-family:var(--serif);font-weight:800;line-height:1;box-shadow:0 2px 8px #0004}
+.logo .mark{width:38px;height:38px;flex:none;border-radius:11px;font-size:19px}
+.logo .name{font-family:var(--serif);font-weight:800;color:#14532d;font-size:21px}
+.view{display:none}.view.on{display:block}
+body.land header,body.land .chat,body.land .sheet,body.land .overlay{display:none}
+.wrap-a{max-width:430px;margin:0 auto;padding:14px 18px 50px}
+.langbar{display:flex;justify-content:flex-end}
+.langbar .lang{border-color:#333}
+.langbar .lang button{color:#ccc}
+.langbar .lang button.on{background:#fff;color:#111}
+.brand{text-align:center;margin:12px 0 22px}
+.brand .mk{width:84px;height:84px;border-radius:24px;font-size:42px;margin:0 auto 12px}
+.brand h1{font-family:var(--serif);font-weight:800;font-size:36px;letter-spacing:.3px}
+.brand p{color:var(--muted);font-size:15.5px;margin-top:6px;line-height:1.5}
+.formcard{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px}
+.fld{margin-bottom:12px}
+.fld label{display:block;font-size:13.5px;color:var(--muted);margin-bottom:5px}
+.inp{position:relative}
+.inp input{width:100%;background:#0d0d14;border:1.5px solid var(--line);color:#fff;border-radius:12px;padding:13px 14px;font:500 16px 'Hind Siliguri',system-ui,sans-serif;outline:none}
+.inp input:focus{border-color:#4ade80}
+.inp .eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:transparent;border:0;font-size:18px;padding:8px;cursor:pointer;color:#bbb}
+.btn-main{width:100%;background:var(--green);border:0;border-bottom:4px solid var(--green2);color:#fff;font:700 17px 'Hind Siliguri',system-ui,sans-serif;padding:13px;border-radius:14px;cursor:pointer;margin-top:4px}
+.btn-main:disabled{opacity:.6}
+.alt{text-align:center;margin-top:12px;font-size:14.5px;color:var(--muted)}
+.alt button{background:none;border:0;color:#4ade80;font:600 14.5px 'Hind Siliguri',system-ui,sans-serif;cursor:pointer;text-decoration:underline}
+.fmsg{margin-top:12px;font-size:14px;text-align:center;min-height:0}
+.fmsg.err{color:#fca5a5}.fmsg.ok{color:#86efac}
+.founder{margin-top:30px;text-align:center}
+.founder img{width:140px;height:140px;border-radius:50%;object-fit:cover;object-position:50% 30%;border:3px solid #4ade80;box-shadow:0 6px 22px #0007}
+.founder h3{font-size:20px;margin-top:12px}
+.founder p{color:var(--muted);font-size:14.5px;margin-top:3px}
+.panel{max-width:460px;margin:0 auto;padding:28px 18px 50px}
+.panel h2{text-align:center;font-size:23px;line-height:1.4;margin-bottom:18px}
+.back{background:none;border:0;color:var(--muted);font:500 14.5px 'Hind Siliguri',system-ui,sans-serif;cursor:pointer;margin-bottom:10px}
+.bigbtn{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);color:#fff;border-radius:18px;padding:16px;margin-bottom:12px;font:600 17px 'Hind Siliguri',system-ui,sans-serif;cursor:pointer;transition:transform .1s,border-color .15s}
+.bigbtn:active{transform:scale(.98);border-color:#4ade80}
+.bigbtn .bi{flex:none;width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.who{display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:#ffffff14;border:1px solid #ffffff22;border-radius:999px;padding:6px 8px 6px 14px;font-size:14px}
+.who button{background:#ffffff22;border:0;color:#fff;border-radius:999px;padding:3px 10px;font:600 12.5px 'Hind Siliguri',system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+.hero{display:flex;flex-direction:column;align-items:center}
+.logout{background:#111;color:#fff;border:0;border-radius:10px;padding:8px 12px;font:600 14px 'Hind Siliguri',system-ui,sans-serif;white-space:nowrap;cursor:pointer}
+.brand.small{margin:4px 0 16px}.brand.small .mk{width:64px;height:64px;font-size:32px;border-radius:19px}
 
-  /* ---------- Hero ---------- */
-  .hero{background:linear-gradient(135deg,#0f1f4a 0%,#1e3a8a 55%,#0e7490 100%);color:#fff;position:relative;overflow:hidden}
-  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 85% 10%,rgba(14,165,164,.35),transparent 70%),radial-gradient(500px 300px at 0% 100%,rgba(37,99,235,.35),transparent 70%)}
-  .hero .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding-top:72px;padding-bottom:84px}
-  .badge{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;margin-bottom:18px}
-  .hero h1{font-size:clamp(34px,5vw,54px);line-height:1.12;letter-spacing:-.02em;margin:0 0 16px;font-weight:800}
-  .hero p.lead{font-size:18px;color:rgba(255,255,255,.82);max-width:520px;margin:0 0 28px}
-  .cta{display:flex;gap:12px;flex-wrap:wrap}
-  .mock{background:#fff;color:var(--ink);border-radius:20px;padding:22px;box-shadow:0 30px 60px rgba(0,0,0,.28)}
-  .mock .meta{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:12px}
-  .mock .prog{height:6px;border-radius:99px;background:var(--soft);overflow:hidden;margin-bottom:16px}
-  .mock .prog i{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--blue),var(--teal))}
-  .mock h3{font-size:17px;margin:0 0 14px;line-height:1.4}
-  .opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:9px;font-size:15px}
-  .opt b{width:26px;height:26px;border-radius:8px;background:var(--soft);color:var(--blue);display:grid;place-items:center;font-size:13px}
-  .opt.right{border-color:#86d9a6;background:#effaf3}
-  .opt.right b{background:var(--ok);color:#fff}
+.brand .promo{font-family:var(--serif);font-weight:800;font-size:30px;line-height:1.3;margin-top:4px;background:linear-gradient(90deg,#86efac,#fde68a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ask{text-align:center;font-size:14.5px;color:var(--muted);letter-spacing:.3px;margin:22px 0 14px;display:flex;align-items:center;gap:12px}
+.ask::before,.ask::after{content:"";flex:1;height:1px;background:var(--line)}
+.roles{display:grid;gap:14px}
+.rolebtn{display:flex;align-items:center;justify-content:space-between;width:100%;border:0;border-radius:22px;padding:0 22px;height:84px;color:#fff;cursor:pointer;font-family:'Hind Siliguri',system-ui,sans-serif;box-shadow:0 8px 22px #0006,inset 0 -4px 0 #0003;transition:transform .1s}
+.rolebtn:active{transform:scale(.97)}
+.rolebtn .rt{font-size:23px;font-weight:700}
+.rolebtn .ri{order:2;font-size:38px;width:56px;height:56px;border-radius:18px;background:#ffffff26;display:flex;align-items:center;justify-content:center}
+.r-stu{background:linear-gradient(135deg,#22c55e,#15803d)}
+.r-tea{background:linear-gradient(135deg,#f59e0b,#c2410c)}
+.qh{text-align:center;font-size:26px;line-height:1.35;margin:6px 0 22px;font-family:var(--serif);font-weight:800}
+.examgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.examcard{border:0;border-radius:22px;aspect-ratio:1/1;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font:700 19px 'Hind Siliguri',system-ui,sans-serif;cursor:pointer;box-shadow:0 8px 22px #0006,inset 0 -4px 0 #0003;transition:transform .1s}
+.examcard:active{transform:scale(.96)}
+.examcard .ei{font-size:46px;width:72px;height:72px;border-radius:22px;background:#ffffff26;display:flex;align-items:center;justify-content:center}
+.e1{background:linear-gradient(135deg,#60a5fa,#4f46e5)}
+.e2{background:linear-gradient(135deg,#34d399,#15803d)}
+.e3{background:linear-gradient(135deg,#f472b6,#be185d)}
+.e4{background:linear-gradient(135deg,#a78bfa,#6d28d9)}
 
-  /* ---------- Sections ---------- */
-  section.block{padding:76px 0}
-  .head{text-align:center;max-width:640px;margin:0 auto 44px}
-  .head h2{font-size:clamp(26px,3.4vw,36px);letter-spacing:-.02em;margin:0 0 10px;color:var(--navy)}
-  .head p{color:var(--muted);margin:0;font-size:17px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-  .feat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;transition:.2s}
-  .feat:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#cfdcf8}
-  .ico{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;margin-bottom:16px;color:#fff}
-  .i1{background:linear-gradient(135deg,#2563eb,#4f8bff)} .i2{background:linear-gradient(135deg,#0ea5a4,#3cc9c8)}
-  .i3{background:linear-gradient(135deg,#7c3aed,#a78bfa)} .i4{background:linear-gradient(135deg,#ea580c,#fb923c)}
-  .i5{background:linear-gradient(135deg,#db2777,#f472b6)}
-  .feat h3{margin:0 0 6px;font-size:18px;color:var(--navy)}
-  .feat p{margin:0;color:var(--muted);font-size:15px}
-  .tag{display:inline-block;margin-top:14px;background:#fff4d6;color:#8a6400;font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px}
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;counter-reset:s}
-  .step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;position:relative}
-  .step::before{counter-increment:s;content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;margin-bottom:14px}
-  .step h3{margin:0 0 6px;font-size:17px;color:var(--navy)} .step p{margin:0;color:var(--muted);font-size:15px}
-  .band{background:var(--navy);color:#fff;border-radius:24px;padding:48px 28px;text-align:center}
-  .band h2{margin:0 0 10px;font-size:clamp(24px,3vw,32px)} .band p{margin:0 0 24px;color:rgba(255,255,255,.78)}
-  footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:14px;text-align:center;background:#fff}
+.roles{gap:14px}
+.rolebtn{flex-direction:column;justify-content:center;gap:10px;height:112px;padding:0 16px;text-align:center;background:linear-gradient(180deg,#171722,#0f0f17);border:1.5px solid var(--line);box-shadow:0 10px 26px #0007;border-radius:22px}
+.rolebtn .rt{font-size:22px;font-weight:700;letter-spacing:.2px;order:2}
+.rolebtn .ri{order:1;width:54px;height:54px;border-radius:17px;color:#fff}
+.rolebtn:active{transform:scale(.98)}
+.r-stu{border-color:#2f8f57}.r-stu .ri{background:linear-gradient(135deg,#22c55e,#15803d)}
+.r-tea{border-color:#b4690e}.r-tea .ri{background:linear-gradient(135deg,#f59e0b,#c2410c)}
+.r-stu:active{background:#10281a}.r-tea:active{background:#2a1c0a}
+.icon{color:#fff}.icon svg{filter:drop-shadow(0 2px 3px #0004)}
+.opt .oi{display:flex}.chat{display:flex;align-items:center;justify-content:center;color:#fff}
+.inp .eye{display:flex;align-items:center}
 
-  /* ---------- Auth (English only) ---------- */
-  .auth{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:#fff}
-  .auth-side{background:linear-gradient(135deg,#0f1f4a,#1e3a8a 60%,#0e7490);color:#fff;padding:48px;display:flex;flex-direction:column;justify-content:space-between}
-  .auth-side h2{font-size:34px;line-height:1.2;letter-spacing:-.02em;margin:0 0 12px}
-  .auth-side p{color:rgba(255,255,255,.8);max-width:380px;margin:0}
-  .auth-side ul{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px;font-size:15px}
-  .auth-side li::before{content:"✓";display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.18);margin-right:10px;font-size:12px}
-  .auth-main{display:flex;align-items:center;justify-content:center;padding:32px 22px}
-  .auth-box{width:100%;max-width:400px}
-  .auth-box h1{font-size:28px;letter-spacing:-.02em;margin:0 0 6px;color:var(--navy)}
-  .auth-box .sub{color:var(--muted);margin:0 0 22px}
-  label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px;color:var(--navy)}
-  input{width:100%;padding:13px 14px;font-size:16px;font-family:inherit;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);transition:.15s}
-  input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(37,99,235,.12)}
-  .full{width:100%;margin-top:20px}
-  .msg{margin-top:14px;font-size:14px;min-height:20px;line-height:1.5}
-  .msg.err{color:var(--err)} .msg.ok{color:var(--ok)}
-  .swap{margin-top:18px;text-align:center;color:var(--muted);font-size:14px}
-  .link{background:none;border:0;color:var(--blue);font-weight:600;padding:0;font-size:14px}
-  .back{background:none;border:0;color:var(--muted);font-size:14px;padding:0;margin-bottom:22px}
-
-  /* ---------- Dashboard ---------- */
-  .dash-head{background:linear-gradient(135deg,#0f1f4a,#1e3a8a);color:#fff;border-radius:22px;padding:30px;margin:28px 0 22px}
-  .dash-head h1{margin:0 0 6px;font-size:26px} .dash-head p{margin:0;color:rgba(255,255,255,.8)}
-  .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding-bottom:60px}
-  .tile{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px}
-  .tile h3{margin:0 0 4px;font-size:17px;color:var(--navy)} .tile p{margin:0;color:var(--muted);font-size:14px}
-
-  @media(max-width:860px){
-    nav.links{display:none}
-    .hero .wrap{grid-template-columns:1fr;padding-top:48px;padding-bottom:56px;gap:32px}
-    .auth{grid-template-columns:1fr}
-    .auth-side{display:none}
-    section.block{padding:52px 0}
-    .btn-sm-hide{display:none}
-  }
+.grid{grid-template-columns:repeat(2,1fr);gap:14px}
+.card{padding:14px 10px 14px}
+.icon{height:84px;border-radius:18px;margin-bottom:10px}
+.card b{font-size:15px;line-height:1.3}
+.c7{background:linear-gradient(135deg,#6ee7b7,#0d9488)}
+.c8{background:linear-gradient(135deg,#fca5a5,#dc2626)}
+.toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);background:#fff;color:#111;font-weight:600;font-size:14.5px;padding:11px 18px;border-radius:999px;box-shadow:0 8px 24px #0009;opacity:0;pointer-events:none;transition:all .25s;z-index:40;white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
-<body>
+<body class="land">
 
-<!-- ============ SITE (landing + dashboard) ============ -->
-<div id="site">
-  <header class="top">
-    <div class="wrap bar">
-      <button class="brand" onclick="go('landing')" aria-label="Prostoti home">
-        <span class="mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5l8 4 8-4v14l-8-4-8 4z"/></svg></span>
-        <span>Prostoti <small>প্রস্তুতি</small></span>
-      </button>
-      <nav class="links" id="navLinks">
-        <a href="#features" data-i="nav_features"></a>
-        <a href="#how" data-i="nav_how"></a>
-      </nav>
-      <div class="actions">
-        <div class="lang" role="group" aria-label="Language">
-          <button id="lEn" onclick="setLang('en')">EN</button>
-          <button id="lBn" onclick="setLang('bn')">বাং</button>
-        </div>
-        <span id="guestBtns">
-          <button class="btn btn-ghost btn-sm-hide" onclick="openAuth('login')" data-i="login"></button>
-          <button class="btn btn-primary" onclick="openAuth('signup')" data-i="signup"></button>
-        </span>
-        <span id="userBtns" class="hidden">
-          <button class="btn btn-ghost" id="logoutBtn" data-i="logout"></button>
-        </span>
-      </div>
-    </div>
-  </header>
+<header>
+  <div class="logo">
+    <span class="mark mk" aria-hidden="true">প্র</span>
+    <span class="name" data-en="Prostoti" data-bn="প্রস্তুতি">প্রস্তুতি</span>
+  </div>
+  <div class="right">
+    <div class="lang"><button class="lb-en" onclick="setLang('en')">EN</button><button class="lb-bn" onclick="setLang('bn')">বাং</button></div>
+    <button class="logout" id="hdrAuth" onclick="hdrAuth()" data-en="Login" data-bn="লগইন">লগইন</button>
+  </div>
+</header>
 
-  <!-- Landing -->
-  <div id="landing">
-    <section class="hero">
-      <div class="wrap">
-        <div>
-          <span class="badge" data-i="hero_badge"></span>
-          <h1 data-i="hero_title"></h1>
-          <p class="lead" data-i="hero_sub"></p>
-          <div class="cta">
-            <button class="btn btn-light btn-lg" onclick="openAuth('signup')" data-i="cta_start"></button>
-            <a class="btn btn-line btn-lg" href="#features" data-i="cta_explore"></a>
-          </div>
-        </div>
-        <div class="mock" aria-hidden="true">
-          <div class="meta"><span data-i="mock_q"></span><span>2 / 5</span></div>
-          <div class="prog"><i></i></div>
-          <h3 data-i="mock_title"></h3>
-          <div class="opt"><b>A</b><span data-i="mock_a"></span></div>
-          <div class="opt right"><b>B</b><span data-i="mock_b"></span></div>
-          <div class="opt"><b>C</b><span data-i="mock_c"></span></div>
-          <div class="opt"><b>D</b><span data-i="mock_d"></span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="features">
-      <div class="wrap">
-        <div class="head"><h2 data-i="feat_title"></h2><p data-i="feat_sub"></p></div>
-        <div class="grid">
-          <div class="feat"><div class="ico i1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg></div><h3 data-i="f1_t"></h3><p data-i="f1_d"></p><span class="tag" data-i="soon"></span></div>
-          <div class="feat"><div class="ico i2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div><h3 data-i="f2_t"></h3><p data-i="f2_d"></p><span class="tag" data-i="soon"></span></div>
-          <div class="feat"><div class="ico i3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></div><h3 data-i="f3_t"></h3><p data-i="f3_d"></p><span class="tag" data-i="soon"></span></div>
-          <div class="feat"><div class="ico i4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><h3 data-i="f4_t"></h3><p data-i="f4_d"></p><span class="tag" data-i="soon"></span></div>
-          <div class="feat"><div class="ico i5"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><h3 data-i="f5_t"></h3><p data-i="f5_d"></p><span class="tag" data-i="soon"></span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="how" style="padding-top:0">
-      <div class="wrap">
-        <div class="head"><h2 data-i="how_title"></h2></div>
-        <div class="steps">
-          <div class="step"><h3 data-i="s1_t"></h3><p data-i="s1_d"></p></div>
-          <div class="step"><h3 data-i="s2_t"></h3><p data-i="s2_d"></p></div>
-          <div class="step"><h3 data-i="s3_t"></h3><p data-i="s3_d"></p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" style="padding-top:0">
-      <div class="wrap"><div class="band">
-        <h2 data-i="band_t"></h2><p data-i="band_d"></p>
-        <button class="btn btn-light btn-lg" onclick="openAuth('signup')" data-i="cta_start"></button>
-      </div></div>
-    </section>
+<!-- ============ ROLE (landing) ============ -->
+<div class="view on" id="v-role">
+ <div class="wrap-a">
+  <div class="langbar"><div class="lang"><button class="lb-en" onclick="setLang('en')">EN</button><button class="lb-bn" onclick="setLang('bn')">বাং</button></div></div>
+  <div class="brand">
+    <div class="mk" aria-hidden="true">প্র</div>
+    <p class="promo" data-en="Everything at your fingertips" data-bn="এক মুঠোয় সবকিছু">এক মুঠোয় সবকিছু</p>
   </div>
 
-  <!-- Dashboard -->
-  <div id="dashboard" class="hidden">
-    <div class="wrap">
-      <div class="dash-head"><h1 id="welcome"></h1><p data-i="dash_sub"></p></div>
-      <div class="dash-grid">
-        <div class="tile"><div class="ico i1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg></div><h3 data-i="f1_t"></h3><p data-i="f1_d"></p><span class="tag" data-i="soon"></span></div>
-        <div class="tile"><div class="ico i2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div><h3 data-i="f2_t"></h3><p data-i="f2_d"></p><span class="tag" data-i="soon"></span></div>
-        <div class="tile"><div class="ico i3"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></div><h3 data-i="f3_t"></h3><p data-i="f3_d"></p><span class="tag" data-i="soon"></span></div>
-        <div class="tile"><div class="ico i4"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><h3 data-i="f4_t"></h3><p data-i="f4_d"></p><span class="tag" data-i="soon"></span></div>
-        <div class="tile"><div class="ico i5"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><h3 data-i="f5_t"></h3><p data-i="f5_d"></p><span class="tag" data-i="soon"></span></div>
-      </div>
+  <p class="ask" data-en="Who are you?" data-bn="আপনার পরিচয় দিন">আপনার পরিচয় দিন</p>
+  <div class="roles">
+    <button class="rolebtn r-stu" onclick="pickRole('student')"><span class="ri"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5zM6 12v5c3 3 9 3 12 0v-5"/></svg></span><span class="rt" data-en="I'm a Student" data-bn="আমি স্টুডেন্ট">আমি স্টুডেন্ট</span></button>
+    <button class="rolebtn r-tea" onclick="pickRole('teacher')"><span class="ri"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/></svg></span><span class="rt" data-en="I'm a Teacher" data-bn="আমি শিক্ষক">আমি শিক্ষক</span></button>
+  </div>
+  <div class="founder">
+    <img src="data:image/jpeg;base64,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" alt="Md Bappy Hossen">
+    <h3>Md Bappy Hossen</h3>
+    <p>English Instructor - I Education</p>
+    <p>Writer &amp; Teacher - Aspect Series</p>
+  </div>
+ </div>
+</div>
+
+<!-- ============ LOGIN (only when opening content) ============ -->
+<div class="view" id="v-login">
+ <div class="wrap-a">
+  <button class="back" onclick="cancelLogin()" data-en="← Back" data-bn="← পেছনে">← পেছনে</button>
+  <div class="brand small">
+    <div class="mk" aria-hidden="true">প্র</div>
+    <p id="loginNote" data-en="Log in to continue" data-bn="চালিয়ে যেতে লগইন করুন">চালিয়ে যেতে লগইন করুন</p>
+  </div>
+  <form class="formcard" id="authForm" onsubmit="return doLogin(event)" novalidate>
+    <div class="fld"><label for="email" data-en="Email Address" data-bn="Email Address">Email Address</label>
+      <div class="inp"><input id="email" type="email" autocomplete="email" inputmode="email" data-ph-en="you@example.com" data-ph-bn="you@example.com" placeholder="you@example.com"></div></div>
+    <div class="fld"><label for="pw" data-en="Password" data-bn="Password">Password</label>
+      <div class="inp"><input id="pw" type="password" autocomplete="current-password" placeholder="••••••••"><button type="button" class="eye" onclick="togglePw()" aria-label="show"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+    <div class="fld"><label for="pw2" data-en="Confirm Password" data-bn="Confirm Password">Confirm Password</label>
+      <div class="inp"><input id="pw2" type="password" autocomplete="new-password" placeholder="••••••••"></div></div>
+    <button class="btn-main" id="loginBtn" type="submit" data-en="Login" data-bn="Login">Login</button>
+    <div class="alt"><span data-en="New here?" data-bn="নতুন?">নতুন?</span> <button type="button" id="signupBtn" onclick="doSignup()" data-en="Create account" data-bn="অ্যাকাউন্ট খুলুন">অ্যাকাউন্ট খুলুন</button></div>
+    <div class="fmsg" id="fmsg"></div>
+  </form>
+ </div>
+</div>
+
+<!-- ============ EXAM ============ -->
+<div class="view" id="v-exam">
+ <div class="panel">
+  <button class="back" onclick="show('role')" data-en="← Back" data-bn="← পেছনে">← পেছনে</button>
+  <h2 class="qh" data-en="What are you preparing for?" data-bn="কিসের প্রস্তুতি নিচ্ছেন?">কিসের প্রস্তুতি নিচ্ছেন?</h2>
+  <div class="examgrid">
+    <button class="examcard e1" onclick="pickExam('hsc')"><span class="ei">📘</span><span data-en="HSC" data-bn="এইচএসসি">এইচএসসি</span></button>
+    <button class="examcard e2" onclick="pickExam('uni')"><span class="ei">🏛️</span><span data-en="University" data-bn="বিশ্ববিদ্যালয়">বিশ্ববিদ্যালয়</span></button>
+    <button class="examcard e3" onclick="pickExam('med')"><span class="ei">🩺</span><span data-en="Medical" data-bn="মেডিকেল">মেডিকেল</span></button>
+    <button class="examcard e4" onclick="pickExam('nur')"><span class="ei">💉</span><span data-en="Nursing" data-bn="নার্সিং">নার্সিং</span></button>
+  </div>
+ </div>
+</div>
+
+<!-- ============ HOME ============ -->
+<div class="view" id="v-home">
+<section class="hero">
+  <h1 data-en="Learn with joy!" data-bn="শেখা হোক আনন্দে!">শেখা হোক আনন্দে!</h1>
+  <p data-en="All your exam preparation in one place" data-bn="এক জায়গায় সম্পূর্ণ পরীক্ষার প্রস্তুতি">এক জায়গায় সম্পূর্ণ পরীক্ষার প্রস্তুতি</p>
+<div class="who" id="who"></div>
+</section>
+
+<main class="grid" id="grid"></main>
+
+<div class="cta">
+  <a href="/quiz?free=1" data-en="Take a free quiz →" data-bn="ফ্রি কুইজ দিন →">ফ্রি কুইজ দিন →</a>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>৫০,০০০+</b><span data-en="Questions" data-bn="প্রশ্ন">প্রশ্ন</span></div>
+  <div class="stat"><b>৮</b><span data-en="Study tools" data-bn="স্টাডি টুল">স্টাডি টুল</span></div>
+  <div class="stat"><b>৳০</b><span data-en="To start" data-bn="শুরু করতে">শুরু করতে</span></div>
+</div>
+
+<section class="blk">
+  <h2 data-en="How it works" data-bn="কীভাবে কাজ করে">কীভাবে কাজ করে</h2>
+  <p class="sub" data-en="Start in three simple steps" data-bn="তিনটি সহজ ধাপে শুরু করুন">তিনটি সহজ ধাপে শুরু করুন</p>
+  <div class="steps">
+    <div class="step"><i>১</i><div><b data-en="Create a free account" data-bn="ফ্রি অ্যাকাউন্ট খুলুন">ফ্রি অ্যাকাউন্ট খুলুন</b><small data-en="Sign up with your email in a minute." data-bn="ইমেইল দিয়ে এক মিনিটেই সাইন আপ করুন।">ইমেইল দিয়ে এক মিনিটেই সাইন আপ করুন।</small></div></div>
+    <div class="step"><i>২</i><div><b data-en="Practice for free" data-bn="ফ্রি তে প্র্যাকটিস করুন">ফ্রি তে প্র্যাকটিস করুন</b><small data-en="Try quizzes and the question bank with daily limits." data-bn="দৈনিক সীমার মধ্যে কুইজ ও প্রশ্ন ব্যাংক ব্যবহার করুন।">দৈনিক সীমার মধ্যে কুইজ ও প্রশ্ন ব্যাংক ব্যবহার করুন।</small></div></div>
+    <div class="step"><i>৩</i><div><b data-en="Go Premium when ready" data-bn="চাইলে প্রিমিয়াম নিন">চাইলে প্রিমিয়াম নিন</b><small data-en="Pay by bKash/Nagad and unlock everything." data-bn="bKash/Nagad-এ পেমেন্ট করে সব আনলক করুন।">bKash/Nagad-এ পেমেন্ট করে সব আনলক করুন।</small></div></div>
+  </div>
+</section>
+
+<section class="blk">
+  <h2 data-en="Try a sample question" data-bn="একটি নমুনা প্রশ্ন করে দেখুন">একটি নমুনা প্রশ্ন করে দেখুন</h2>
+  <p class="sub" data-en="Instant answer and explanation" data-bn="সাথে সাথে উত্তর ও ব্যাখ্যা">সাথে সাথে উত্তর ও ব্যাখ্যা</p>
+  <div class="qbox" id="qbox">
+    <div class="qmeta"><span data-en="General Knowledge" data-bn="সাধারণ জ্ঞান">সাধারণ জ্ঞান</span><span data-en="Easy" data-bn="সহজ">সহজ</span></div>
+    <h4 data-en="What is the national flower of Bangladesh?" data-bn="বাংলাদেশের জাতীয় ফুল কোনটি?">বাংলাদেশের জাতীয় ফুল কোনটি?</h4>
+    <button class="qo" data-ok="1" data-en="A. Water lily (Shapla)" data-bn="ক. শাপলা">ক. শাপলা</button>
+    <button class="qo" data-en="B. Rose" data-bn="খ. গোলাপ">খ. গোলাপ</button>
+    <button class="qo" data-en="C. Hibiscus" data-bn="গ. জবা">গ. জবা</button>
+    <button class="qo" data-en="D. Tuberose" data-bn="ঘ. রজনীগন্ধা">ঘ. রজনীগন্ধা</button>
+    <div class="expl" id="expl" data-en="Explanation: The water lily (Shapla) is Bangladesh's national flower." data-bn="ব্যাখ্যা: শাপলা বাংলাদেশের জাতীয় ফুল।">ব্যাখ্যা: শাপলা বাংলাদেশের জাতীয় ফুল।</div>
+  </div>
+</section>
+
+<section class="blk">
+  <h2 data-en="Plans" data-bn="প্ল্যান">প্ল্যান</h2>
+  <p class="sub" data-en="Start free, upgrade anytime" data-bn="ফ্রি তে শুরু, যেকোনো সময় আপগ্রেড">ফ্রি তে শুরু, যেকোনো সময় আপগ্রেড</p>
+  <div class="plans">
+    <div class="plan">
+      <h3 data-en="Free" data-bn="ফ্রি">ফ্রি</h3>
+      <div class="price">৳০</div>
+      <ul>
+        <li data-en="10 quizzes per day" data-bn="দিনে ১০টি কুইজ">দিনে ১০টি কুইজ</li>
+        <li data-en="Question bank (limited)" data-bn="প্রশ্ন ব্যাংক (সীমিত)">প্রশ্ন ব্যাংক (সীমিত)</li>
+        <li data-en="Vocabulary flashcards" data-bn="ভোকাবুলারি ফ্ল্যাশকার্ড">ভোকাবুলারি ফ্ল্যাশকার্ড</li>
+        <li class="no" data-en="PPTX / Slide generator" data-bn="PPTX / স্লাইড জেনারেটর">PPTX / স্লাইড জেনারেটর</li>
+        <li class="no" data-en="Final model tests" data-bn="ফাইনাল মডেল টেস্ট">ফাইনাল মডেল টেস্ট</li>
+      </ul>
+      <a href="/signup" data-en="Start free" data-bn="ফ্রি তে শুরু করুন">ফ্রি তে শুরু করুন</a>
+    </div>
+    <div class="plan hot">
+      <span class="tag" data-en="Popular" data-bn="জনপ্রিয়">জনপ্রিয়</span>
+      <h3>Premium</h3>
+      <div class="price">৳১৫০ <small data-en="/ month" data-bn="/ মাস">/ মাস</small></div>
+      <ul>
+        <li data-en="Unlimited quizzes" data-bn="আনলিমিটেড কুইজ">আনলিমিটেড কুইজ</li>
+        <li data-en="Full question bank" data-bn="সম্পূর্ণ প্রশ্ন ব্যাংক">সম্পূর্ণ প্রশ্ন ব্যাংক</li>
+        <li data-en="Automatic PPTX / Slides" data-bn="অটো PPTX / স্লাইড">অটো PPTX / স্লাইড</li>
+        <li data-en="Topic-wise exams" data-bn="টপিকভিত্তিক এক্সাম">টপিকভিত্তিক এক্সাম</li>
+        <li data-en="Final model tests + PDFs" data-bn="ফাইনাল মডেল টেস্ট + PDF">ফাইনাল মডেল টেস্ট + PDF</li>
+      </ul>
+      <a href="/upgrade" data-en="Get Premium" data-bn="প্রিমিয়াম নিন">প্রিমিয়াম নিন</a>
+    </div>
+    <div class="plan">
+      <h3 data-en="Premium 3 months" data-bn="প্রিমিয়াম ৩ মাস">প্রিমিয়াম ৩ মাস</h3>
+      <div class="price">৳৩৯০ <small data-en="/ 3 months" data-bn="/ ৩ মাস">/ ৩ মাস</small></div>
+      <ul>
+        <li data-en="Everything in Premium" data-bn="প্রিমিয়ামের সবকিছু">প্রিমিয়ামের সবকিছু</li>
+        <li data-en="Save ৳60" data-bn="৳৬০ সাশ্রয়">৳৬০ সাশ্রয়</li>
+      </ul>
+      <a href="/upgrade" data-en="Get 3 months" data-bn="৩ মাস নিন">৩ মাস নিন</a>
     </div>
   </div>
+  <p class="note" data-en="Sample prices, to be changed later" data-bn="নমুনা মূল্য, পরে বদলানো হবে">নমুনা মূল্য, পরে বদলানো হবে</p>
+</section>
 
-  <footer><div class="wrap"><span data-i="footer"></span></div></footer>
+<section class="blk">
+  <h2 data-en="How to pay" data-bn="কীভাবে পেমেন্ট করবেন">কীভাবে পেমেন্ট করবেন</h2>
+  <p class="sub" data-en="Manual payment via bKash / Nagad" data-bn="bKash / Nagad-এ ম্যানুয়াল পেমেন্ট">bKash / Nagad-এ ম্যানুয়াল পেমেন্ট</p>
+  <div class="steps">
+    <div class="step"><i>১</i><div><b data-en="Send money" data-bn="টাকা পাঠান">টাকা পাঠান</b><small data-en="Send the plan amount to our bKash/Nagad number." data-bn="প্ল্যানের টাকা আমাদের bKash/Nagad নম্বরে পাঠান।">প্ল্যানের টাকা আমাদের bKash/Nagad নম্বরে পাঠান।</small></div></div>
+    <div class="step"><i>২</i><div><b data-en="Submit TrxID" data-bn="TrxID জমা দিন">TrxID জমা দিন</b><small data-en="Enter your TrxID and sender number in the form." data-bn="ফর্মে TrxID ও আপনার নম্বর লিখুন।">ফর্মে TrxID ও আপনার নম্বর লিখুন।</small></div></div>
+    <div class="step"><i>৩</i><div><b data-en="Get unlocked" data-bn="আনলক পান">আনলক পান</b><small data-en="We verify and activate your plan." data-bn="যাচাইয়ের পর আপনার প্ল্যান চালু হবে।">যাচাইয়ের পর আপনার প্ল্যান চালু হবে।</small></div></div>
+  </div>
+</section>
+
+<section class="blk">
+  <h2 data-en="Common questions" data-bn="সাধারণ প্রশ্ন">সাধারণ প্রশ্ন</h2>
+  <p class="sub"></p>
+  <details><summary data-en="Is it really free to start?" data-bn="শুরু করা কি সত্যিই ফ্রি?">শুরু করা কি সত্যিই ফ্রি?</summary><p data-en="Yes. You can sign up and use the free features without paying anything." data-bn="হ্যাঁ। সাইন আপ করে ফ্রি ফিচারগুলো কোনো টাকা ছাড়াই ব্যবহার করা যায়।">হ্যাঁ। সাইন আপ করে ফ্রি ফিচারগুলো কোনো টাকা ছাড়াই ব্যবহার করা যায়।</p></details>
+  <details><summary data-en="How long does activation take?" data-bn="প্রিমিয়াম চালু হতে কত সময় লাগে?">প্রিমিয়াম চালু হতে কত সময় লাগে?</summary><p data-en="After we verify your payment, usually within a few hours." data-bn="পেমেন্ট যাচাইয়ের পর সাধারণত কয়েক ঘণ্টার মধ্যে।">পেমেন্ট যাচাইয়ের পর সাধারণত কয়েক ঘণ্টার মধ্যে।</p></details>
+  <details><summary data-en="Can I use it on my phone?" data-bn="ফোনে ব্যবহার করা যাবে?">ফোনে ব্যবহার করা যাবে?</summary><p data-en="Yes, the whole site is designed for mobile first." data-bn="হ্যাঁ, পুরো সাইট মোবাইল-ফ্রেন্ডলি করে বানানো।">হ্যাঁ, পুরো সাইট মোবাইল-ফ্রেন্ডলি করে বানানো।</p></details>
+  <details><summary data-en="Can I share my account?" data-bn="অ্যাকাউন্ট কি অন্যকে শেয়ার করা যাবে?">অ্যাকাউন্ট কি অন্যকে শেয়ার করা যাবে?</summary><p data-en="No. Each premium plan is for one person." data-bn="না। প্রতিটি প্রিমিয়াম প্ল্যান একজনের জন্য।">না। প্রতিটি প্রিমিয়াম প্ল্যান একজনের জন্য।</p></details>
+</section>
+
+<footer>
+  <div class="links">
+    <a href="/about" data-en="About" data-bn="আমাদের সম্পর্কে">আমাদের সম্পর্কে</a>
+    <a href="/contact" data-en="Contact" data-bn="যোগাযোগ">যোগাযোগ</a>
+    <a href="/privacy" data-en="Privacy" data-bn="গোপনীয়তা">গোপনীয়তা</a>
+    <a href="/terms" data-en="Terms" data-bn="শর্তাবলী">শর্তাবলী</a>
+  </div>
+  <div>© ২০২৬ প্রস্তুতি / Prostoti</div>
+</footer>
 </div>
 
-<!-- ============ AUTH (English only) ============ -->
-<div id="authView" class="auth hidden">
-  <aside class="auth-side">
-    <div class="brand" style="color:#fff"><span class="mark" style="background:rgba(255,255,255,.18)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5l8 4 8-4v14l-8-4-8 4z"/></svg></span>Prostoti</div>
-    <div>
-      <h2>Practice smarter.<br>Prepare with confidence.</h2>
-      <p>One place for quizzes, question banks, mock exams, PDF notes and slides.</p>
-      <ul><li>Unlimited quiz practice</li><li>Timed mock exams</li><li>Bilingual: Bangla &amp; English</li></ul>
-    </div>
-    <small style="color:rgba(255,255,255,.6)">© Prostoti</small>
-  </aside>
-  <main class="auth-main">
-    <div class="auth-box">
-      <button class="back" onclick="go('landing')">← Back to home</button>
-      <h1 id="aTitle">Welcome back</h1>
-      <p class="sub" id="aSub">Log in to continue your preparation.</p>
-      <form id="authForm">
-        <div id="nameWrap" class="hidden">
-          <label for="fullName">Full name</label>
-          <input id="fullName" type="text" placeholder="Your name" autocomplete="name">
-        </div>
-        <label for="email">Email</label>
-        <input id="email" type="email" placeholder="you@example.com" autocomplete="email" required>
-        <label for="password">Password</label>
-        <input id="password" type="password" placeholder="At least 6 characters" minlength="6" autocomplete="current-password" required>
-        <button id="aBtn" class="btn btn-primary btn-lg full" type="submit">Log in</button>
-      </form>
-      <div id="aMsg" class="msg"></div>
-      <div class="swap"><span id="aSwapText">New to Prostoti?</span> <button class="link" id="aSwapBtn" type="button">Create an account</button></div>
-    </div>
-  </main>
+<button class="chat" aria-label="Support"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></button>
+
+<div class="overlay" id="ov" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true">
+  <div class="grab"></div>
+  <h3 id="sh-title"></h3>
+  <a class="opt free" id="sh-free" href="#">
+    <span class="oi"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg></span>
+    <span><b data-en="Try for free" data-bn="ফ্রি তে ট্রাই করুন">ফ্রি তে ট্রাই করুন</b><small data-en="Limited access, no payment" data-bn="সীমিত অ্যাক্সেস, কোনো পেমেন্ট নেই">সীমিত অ্যাক্সেস, কোনো পেমেন্ট নেই</small></span>
+  </a>
+  <a class="opt prem" id="sh-prem" href="#">
+    <span class="oi"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4l3 12h14l3-12-6 5-4-7-4 7-6-5zM5 20h14"/></svg></span>
+    <span><b data-en="Use Premium" data-bn="প্রিমিয়াম ইউজ করুন">প্রিমিয়াম ইউজ করুন</b><small data-en="Full unlimited access" data-bn="সম্পূর্ণ আনলিমিটেড অ্যাক্সেস">সম্পূর্ণ আনলিমিটেড অ্যাক্সেস</small></span>
+  </a>
+  <button class="cancel" onclick="closeSheet()" data-en="Cancel" data-bn="বাতিল">বাতিল</button>
 </div>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* ===== Supabase ===== */
-const SUPABASE_URL = "https://eohpndvekbhdsneuvenl.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Mhwa1J76xzk-MGtxOkej-w_sqYcDOrW";
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SB_URL='https://eohpndvekbhdsneuvenl.supabase.co';
+const SB_KEY='sb_publishable_Mhwa1J76xzk-MGtxOkej-w_sqYcDOrW';
+let sb=null;
+try{sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}
 
-/* ===== Translations (site only; login screen is always English) ===== */
-const T = {
-  en:{
-    nav_features:"Features", nav_how:"How it works", login:"Log in", signup:"Sign up", logout:"Log out",
-    hero_badge:"Free to start · Bangla & English",
-    hero_title:"Practice. Exam. Succeed.",
-    hero_sub:"Unlimited quizzes, a growing question bank, timed mock exams, PDF notes and a slide generator — all in one place.",
-    cta_start:"Get started free", cta_explore:"Explore features",
-    mock_q:"Question 2", mock_title:"Which planet is known as the Red Planet?",
-    mock_a:"Venus", mock_b:"Mars", mock_c:"Jupiter", mock_d:"Mercury",
-    feat_title:"Everything you need to prepare", feat_sub:"Built for steady practice, real exam feel and quick revision.",
-    f1_t:"Unlimited Quizzes", f1_d:"Practice as much as you want with instant answers and explanations.",
-    f2_t:"Question Bank", f2_d:"Browse questions by subject, chapter and difficulty.",
-    f3_t:"Mock Exams", f3_d:"Timed exams with results to track your progress.",
-    f4_t:"PDF Library", f4_d:"Read and download notes, books and study material.",
-    f5_t:"Slide Generator", f5_d:"Turn your content into a ready PowerPoint (PPTX) in seconds.",
-    soon:"Coming soon",
-    how_title:"How it works",
-    s1_t:"Create your account", s1_d:"Sign up free with your email in under a minute.",
-    s2_t:"Pick a subject", s2_d:"Choose what you want to practice or revise.",
-    s3_t:"Practice and improve", s3_d:"Take quizzes and exams, then learn from every answer.",
-    band_t:"Start your preparation today", band_d:"Join Prostoti and make every study session count.",
-    dash_sub:"Your learning tools are being added step by step.",
-    welcome:"Welcome", footer:"© Prostoti — প্রস্তুতি. All rights reserved."
-  },
-  bn:{
-    nav_features:"ফিচার", nav_how:"কীভাবে কাজ করে", login:"লগইন", signup:"সাইন আপ", logout:"লগআউট",
-    hero_badge:"শুরু করুন বিনামূল্যে · বাংলা ও ইংরেজি",
-    hero_title:"অনুশীলন করুন। পরীক্ষা দিন। সফল হোন।",
-    hero_sub:"আনলিমিটেড কুইজ, বড় হতে থাকা প্রশ্ন ব্যাংক, সময়ভিত্তিক মডেল টেস্ট, PDF নোট আর স্লাইড জেনারেটর — সব এক জায়গায়।",
-    cta_start:"বিনামূল্যে শুরু করুন", cta_explore:"ফিচার দেখুন",
-    mock_q:"প্রশ্ন ২", mock_title:"কোন গ্রহকে লাল গ্রহ বলা হয়?",
-    mock_a:"শুক্র", mock_b:"মঙ্গল", mock_c:"বৃহস্পতি", mock_d:"বুধ",
-    feat_title:"প্রস্তুতির জন্য যা যা দরকার", feat_sub:"নিয়মিত অনুশীলন, আসল পরীক্ষার অনুভূতি আর দ্রুত রিভিশনের জন্য তৈরি।",
-    f1_t:"আনলিমিটেড কুইজ", f1_d:"যত খুশি অনুশীলন করুন, সাথে সাথে উত্তর ও ব্যাখ্যা পান।",
-    f2_t:"প্রশ্ন ব্যাংক", f2_d:"বিষয়, অধ্যায় ও কঠিনতা অনুযায়ী প্রশ্ন খুঁজুন।",
-    f3_t:"মডেল টেস্ট", f3_d:"টাইমারসহ পরীক্ষা দিন, ফলাফলে নিজের অগ্রগতি দেখুন।",
-    f4_t:"PDF লাইব্রেরি", f4_d:"নোট, বই ও পড়ার উপকরণ পড়ুন ও ডাউনলোড করুন।",
-    f5_t:"স্লাইড জেনারেটর", f5_d:"আপনার কনটেন্ট থেকে কয়েক সেকেন্ডে PowerPoint (PPTX) বানান।",
-    soon:"শীঘ্রই আসছে",
-    how_title:"কীভাবে কাজ করে",
-    s1_t:"অ্যাকাউন্ট খুলুন", s1_d:"এক মিনিটের মধ্যে ইমেইল দিয়ে ফ্রি সাইন আপ করুন।",
-    s2_t:"বিষয় বেছে নিন", s2_d:"যা অনুশীলন বা রিভিশন করতে চান সেটা নির্বাচন করুন।",
-    s3_t:"অনুশীলন করে এগিয়ে যান", s3_d:"কুইজ ও পরীক্ষা দিন, প্রতিটি উত্তর থেকে শিখুন।",
-    band_t:"আজই প্রস্তুতি শুরু করুন", band_d:"প্রস্তুতির সাথে থাকুন, প্রতিটি পড়ার সময় কাজে লাগান।",
-    dash_sub:"আপনার শেখার টুলগুলো ধাপে ধাপে যুক্ত হচ্ছে।",
-    welcome:"স্বাগতম", footer:"© প্রস্তুতি — Prostoti. সর্বস্বত্ব সংরক্ষিত।"
-  }
-};
-let lang = "en";
-try { const s = localStorage.getItem("lang"); if (s === "bn" || s === "en") lang = s; } catch(e){}
-let currentUser = null;
+let LANG='bn';
+const EXAMS={hsc:['HSC','এইচএসসি'],uni:['University','বিশ্ববিদ্যালয়'],med:['Medical','মেডিকেল'],nur:['Nursing','নার্সিং']};
+const t=(en,bn)=>LANG==='en'?en:bn;
+const $=id=>document.getElementById(id);
 
-function applyLang(){
-  document.documentElement.lang = lang;
-  document.querySelectorAll("[data-i]").forEach(el => { el.textContent = T[lang][el.dataset.i] || ""; });
-  document.getElementById("lEn").classList.toggle("on", lang==="en");
-  document.getElementById("lBn").classList.toggle("on", lang==="bn");
-  if (currentUser) document.getElementById("welcome").textContent = T[lang].welcome + ", " + userName(currentUser);
+function setLang(l){
+  LANG=l;document.documentElement.lang=l;
+  document.querySelectorAll('[data-en]').forEach(e=>e.textContent=e.dataset[l]);
+  document.querySelectorAll('.lb-en').forEach(b=>b.classList.toggle('on',l==='en'));
+  document.querySelectorAll('.lb-bn').forEach(b=>b.classList.toggle('on',l==='bn'));
+  try{localStorage.setItem('lang',l)}catch(e){}
+  renderWho();
 }
-function setLang(l){ lang = l; try{ localStorage.setItem("lang", l); }catch(e){} applyLang(); }
-function userName(u){ return (u.user_metadata && u.user_metadata.full_name) || u.email; }
 
-/* ===== Views ===== */
-const $ = id => document.getElementById(id);
-function go(view){
-  if (view === "auth"){ $("site").classList.add("hidden"); $("authView").classList.remove("hidden"); window.scrollTo(0,0); return; }
-  $("authView").classList.add("hidden"); $("site").classList.remove("hidden");
-  const loggedIn = !!currentUser;
-  $("landing").classList.toggle("hidden", loggedIn);
-  $("dashboard").classList.toggle("hidden", !loggedIn);
-  $("guestBtns").classList.toggle("hidden", loggedIn);
-  $("userBtns").classList.toggle("hidden", !loggedIn);
-  $("navLinks").classList.toggle("hidden", loggedIn);
+function show(v){
+  document.querySelectorAll('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));
+  document.body.classList.toggle('land',v==='role');
   window.scrollTo(0,0);
 }
 
-/* ===== Auth (English only) ===== */
-let mode = "login";
-function setMsg(t, c){ const m=$("aMsg"); m.textContent=t||""; m.className="msg "+(c||""); }
-function setMode(m){
-  mode = m; const s = m==="signup";
-  $("aTitle").textContent = s ? "Create your account" : "Welcome back";
-  $("aSub").textContent = s ? "Sign up free and start practicing today." : "Log in to continue your preparation.";
-  $("aBtn").textContent = s ? "Create account" : "Log in";
-  $("nameWrap").classList.toggle("hidden", !s);
-  $("aSwapText").textContent = s ? "Already have an account?" : "New to Prostoti?";
-  $("aSwapBtn").textContent = s ? "Log in" : "Create an account";
-  $("password").autocomplete = s ? "new-password" : "current-password";
-  setMsg("");
-}
-function openAuth(m){ setMode(m); go("auth"); }
-$("aSwapBtn").addEventListener("click", () => setMode(mode==="login" ? "signup" : "login"));
 
-function friendly(msg){
-  const t = (msg||"").toLowerCase();
-  if (t.includes("invalid login")) return "Incorrect email or password.";
-  if (t.includes("already registered") || t.includes("already been registered")) return "This email is already registered. Please log in.";
-  if (t.includes("rate limit")) return "Too many attempts. Please wait a bit and try again.";
-  if (t.includes("not confirmed")) return "Your email is not verified yet. Please check your inbox.";
-  if (t.includes("password")) return "Password must be at least 6 characters.";
-  return "Something went wrong: " + msg;
+/* ---------- features per role ---------- */
+const LIVE=[]; // পেজ তৈরি হলে এখানে পাথ যোগ করুন, যেমন '/quiz'
+const P={
+ inf:'<path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/>',
+ book:'<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
+ target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+ trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+ cards:'<path d="m12 2 10 5-10 5L2 7zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
+ mistake:'<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5zM14 2v6h6M9.5 12.5l5 5M14.5 12.5l-5 5"/>',
+ chart:'<path d="M3 3v18h18M7 14l4-4 4 4 5-6"/>',
+ podium:'<path d="M2 21h20M4 21v-7h5v7M9.5 21V6h5v15M15 21V11h5v10"/>',
+ pres:'<path d="M2 3h20M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3M7 21l5-5 5 5"/>',
+ sheet:'<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5zM14 2v6h6M8 13h8M8 17h8M8 9h2"/>',
+ omr:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.3"/><circle cx="12" cy="8" r="1.3"/><circle cx="16" cy="8" r="1.3"/><circle cx="8" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="16" cy="12" r="1.3"/><circle cx="8" cy="16" r="1.3"/><circle cx="12" cy="16" r="1.3"/><circle cx="16" cy="16" r="1.3"/>',
+ live:'<path d="m23 7-7 5 7 5z"/><rect x="1" y="5" width="15" height="14" rx="2"/>',
+ medal:'<path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM8.21 13.89 7 23l5-3 5 3-1.21-9.12"/>',
+ scan:'<path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/>',
+ report:'<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6M9 16h4"/>'
+};
+const ic=(k,sz)=>'<svg viewBox="0 0 24 24" width="'+sz+'" height="'+sz+'" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+P[k]+'</svg>';
+// [path, icon, en, bn, pro]
+const FEATURES={
+ student:[
+  ['/quiz','inf','Unlimited Quiz','আনলিমিটেড কুইজ',1],
+  ['/question-bank','book','Question Bank','প্রশ্ন ব্যাংক',0],
+  ['/topic-exam','target','Topic Wise Exam','টপিকভিত্তিক এক্সাম',0],
+  ['/model-test','trophy','Final Model Test','ফাইনাল মডেল টেস্ট',1],
+  ['/flashcards','cards','Vocabulary Flashcards','ভোকাবুলারি ফ্ল্যাশকার্ড',0],
+  ['/mistake-book','mistake','Mistake Notebook','ভুলের খাতা',1],
+  ['/progress','chart','Progress Report','প্রোগ্রেস রিপোর্ট',0],
+  ['/leaderboard','podium','Leaderboard','লিডারবোর্ড',0]
+ ],
+ teacher:[
+  ['/slides','pres','Generate PPTX/Slides','PPTX/স্লাইড জেনারেট',1],
+  ['/question-bank','book','Question Bank','প্রশ্ন ব্যাংক',0],
+  ['/lecture-sheet','sheet','Lecture Sheet Maker','লেকচার শিট মেকার',1],
+  ['/omr-generator','omr','OMR Sheet Generator','OMR শিট জেনারেটর',1],
+  ['/live-exam','live','Create Live Exam','লাইভ এক্সাম তৈরি',1],
+  ['/merit-list','medal','Student Merit List','স্টুডেন্ট মেরিট লিস্ট',0],
+  ['/omr-scanner','scan','OMR Answer Sheet Scanner','OMR খাতা স্ক্যানার',1],
+  ['/student-reports','report','Student Reports','স্টুডেন্ট রিপোর্ট',0]
+ ]
+};
+function renderCards(){
+  const g=$('grid');if(!g)return;
+  const role=getProf().role==='teacher'?'teacher':'student';
+  g.innerHTML='';
+  FEATURES[role].forEach((f,i)=>{
+    const a=document.createElement('a');a.className='card';a.href=f[0];
+    a.innerHTML=(f[4]?'<span class="pro">PRO</span>':'')+'<div class="icon c'+(i+1)+'">'+ic(f[1],38)+'</div><b>'+(LANG==='en'?f[2]:f[3])+'</b>';
+    a.addEventListener('click',e=>{e.preventDefault();openSheet(a)});
+    g.appendChild(a);
+  });
 }
+function isLive(h){try{return LIVE.includes(new URL(h,location.href).pathname)}catch(e){return false}}
+let toastT;
+function toast(m){const e=$('toast');e.textContent=m;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),2400)}
+function soon(){toast(t('This feature is coming soon','এই ফিচারটি শীঘ্রই আসছে'))}
 
-$("authForm").addEventListener("submit", async e => {
+/* ---------- profile (role / exam) ---------- */
+function getProf(){try{return JSON.parse(localStorage.getItem('prostoti_prof')||'{}')}catch(e){return {}}}
+function saveProf(p){
+  try{localStorage.setItem('prostoti_prof',JSON.stringify(p))}catch(e){}
+  if(sb)sb.auth.updateUser({data:p}).catch(()=>{});
+}
+function renderWho(){
+  renderCards();
+  const el=$('who');if(!el)return;
+  const p=getProf();
+  if(!p.role){el.style.display='none';return}
+  el.style.display='inline-flex';
+  el.innerHTML='';
+  const s=document.createElement('span');s.textContent=p.role==='teacher'?t('Teacher','শিক্ষক'):t('Student','স্টুডেন্ট');el.appendChild(s);
+  const b=document.createElement('button');b.textContent=t('Change','বদলান');
+  b.onclick=()=>show('role');el.appendChild(b);
+}
+function pickRole(r){
+  const p=getProf();p.role=r;delete p.exam;saveProf(p);renderWho();show('home');
+}
+function pickExam(x){
+  const p=getProf();p.role='student';p.exam=x;saveProf(p);renderWho();show('home');
+}
+let SESSION=null,PENDING=null;
+function updateAuthUI(){
+  const b=$('hdrAuth');if(!b)return;
+  b.dataset.en=SESSION?'Log out':'Login';b.dataset.bn=SESSION?'লগ আউট':'লগইন';
+  b.textContent=b.dataset[LANG];
+}
+function hdrAuth(){if(SESSION)doLogout();else{PENDING=null;show('login')}}
+function mergeMeta(user){
+  const meta=(user&&user.user_metadata)||{};
+  const l=getProf();
+  if(l.role){ // local choice wins, push it to the account
+    if(meta.role!==l.role||meta.exam!==l.exam)saveProf(l);
+  }else if(meta.role){
+    const p={role:meta.role};if(meta.exam)p.exam=meta.exam;
+    try{localStorage.setItem('prostoti_prof',JSON.stringify(p))}catch(e){}
+  }
+}
+function routeBase(){
+  const p=getProf();renderWho();
+  if(!p.role)show('role');else show('home');
+}
+function afterLogin(user){
+  SESSION=user;mergeMeta(user);updateAuthUI();
+  if(PENDING){const go=PENDING;PENDING=null;if(isLive(go)){location.href=go;return}routeBase();soon();return}
+  routeBase();
+}
+function cancelLogin(){PENDING=null;routeBase()}
+function gate(e,a){
   e.preventDefault();
-  const email = $("email").value.trim(), password = $("password").value, btn = $("aBtn");
-  btn.disabled = true; setMsg("Please wait...");
-  try {
-    if (mode === "signup"){
-      const { data, error } = await sb.auth.signUp({ email, password, options:{ data:{ full_name: $("fullName").value.trim() } } });
-      if (error) throw error;
-      if (data.session) setMsg("");
-      else setMsg("Account created. Check your email and click the verification link, then log in.", "ok");
-    } else {
-      const { error } = await sb.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-    }
-  } catch(err){ setMsg(friendly(err.message), "err"); }
-  finally { btn.disabled = false; }
-});
-
-$("logoutBtn").addEventListener("click", () => sb.auth.signOut());
-
-/* ===== Session ===== */
-function onSession(session){
-  currentUser = session ? session.user : null;
-  applyLang();
-  go("landing");
+  if(SESSION){closeSheet();if(isLive(a.href))location.href=a.href;else soon();return}
+  PENDING=a.href;closeSheet();
+  $('loginNote').textContent=t('Log in to open this content','এই কন্টেন্ট খুলতে লগইন করুন');
+  show('login');
 }
-sb.auth.onAuthStateChange((_e, session) => onSession(session));
-sb.auth.getSession().then(({data}) => onSession(data.session));
-applyLang();
+
+/* ---------- auth ---------- */
+function msg(text,kind){const m=$('fmsg');m.textContent=text||'';m.className='fmsg '+(kind||'')}
+function togglePw(){const a=$('pw'),b=$('pw2'),ty=a.type==='password'?'text':'password';a.type=ty;b.type=ty}
+function validate(needConfirm){
+  const email=$('email').value.trim(),pw=$('pw').value,pw2=$('pw2').value;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg(t('Enter a valid email address.','সঠিক ইমেইল ঠিকানা দিন।'),'err');return null}
+  if(pw.length<6){msg(t('Password must be at least 6 characters.','পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।'),'err');return null}
+  if(needConfirm&&pw!==pw2){msg(t('Passwords do not match.','পাসওয়ার্ড দুটি মিলছে না।'),'err');return null}
+  if(!needConfirm&&pw2&&pw!==pw2){msg(t('Passwords do not match.','পাসওয়ার্ড দুটি মিলছে না।'),'err');return null}
+  return {email,pw};
+}
+function busy(b){$('loginBtn').disabled=b;$('signupBtn').disabled=b}
+async function doLogin(e){
+  if(e)e.preventDefault();
+  msg('');const v=validate(false);if(!v)return false;
+  if(!sb){msg(t('Could not connect. Check your internet and reload.','সংযোগ হয়নি। ইন্টারনেট দেখে পেজ রিলোড করুন।'),'err');return false}
+  busy(true);
+  try{
+    const {data,error}=await sb.auth.signInWithPassword({email:v.email,password:v.pw});
+    if(error){
+      const m=(error.message||'').toLowerCase();
+      if(m.includes('invalid'))msg(t('Wrong email or password. New here? Tap "Create account".','ইমেইল বা পাসওয়ার্ড ভুল। নতুন হলে "অ্যাকাউন্ট খুলুন" চাপুন।'),'err');
+      else if(m.includes('confirm'))msg(t('Please verify your email first (check your inbox).','আগে ইমেইল যাচাই করুন (ইনবক্স দেখুন)।'),'err');
+      else msg(error.message,'err');
+    }else afterLogin(data.user);
+  }catch(err){msg(t('Something went wrong. Try again.','সমস্যা হয়েছে। আবার চেষ্টা করুন।'),'err')}
+  busy(false);return false;
+}
+async function doSignup(){
+  msg('');const v=validate(true);if(!v)return;
+  if(!sb){msg(t('Could not connect. Check your internet and reload.','সংযোগ হয়নি। ইন্টারনেট দেখে পেজ রিলোড করুন।'),'err');return}
+  busy(true);
+  try{
+    const {data,error}=await sb.auth.signUp({email:v.email,password:v.pw,options:{emailRedirectTo:location.origin}});
+    if(error)msg(error.message,'err');
+    else if(data.session)afterLogin(data.user);
+    else msg(t('Account created. Check your email to verify, then log in.','অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলে যাচাই লিংক দেখুন, তারপর লগইন করুন।'),'ok');
+  }catch(err){msg(t('Something went wrong. Try again.','সমস্যা হয়েছে। আবার চেষ্টা করুন।'),'err')}
+  busy(false);
+}
+async function doLogout(){
+  try{if(sb)await sb.auth.signOut()}catch(e){}
+  SESSION=null;PENDING=null;updateAuthUI();
+  try{localStorage.removeItem('prostoti_prof')}catch(e){}
+  $('pw').value='';$('pw2').value='';msg('');renderWho();show('role');
+}
+
+/* ---------- home: sample question & action sheet ---------- */
+document.querySelectorAll('#qbox .qo').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#qbox .qo').forEach(x=>{x.disabled=true;if(x.dataset.ok)x.classList.add('ok')});
+  if(!b.dataset.ok)b.classList.add('bad');
+  $('expl').classList.add('show');
+}));
+function openSheet(card){
+  const href=card.getAttribute('href'),ex=getProf().exam?'&exam='+getProf().exam:'';
+  $('sh-title').textContent=card.querySelector('b').textContent;
+  $('sh-free').href=href+'?mode=free'+ex;
+  $('sh-prem').href=href+'?mode=premium'+ex;
+  $('ov').classList.add('show');$('sheet').classList.add('show');
+}
+function closeSheet(){$('ov').classList.remove('show');$('sheet').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+['sh-free','sh-prem'].forEach(id=>$(id).addEventListener('click',e=>gate(e,$(id))));
+
+/* ---------- start ---------- */
+let saved='bn';try{saved=localStorage.getItem('lang')||'bn'}catch(e){}
+setLang(saved);
+updateAuthUI();
+routeBase();
+(async()=>{
+  if(!sb)return;
+  try{
+    const {data}=await sb.auth.getSession();
+    if(data&&data.session){SESSION=data.session.user;mergeMeta(SESSION);updateAuthUI();routeBase()}
+    sb.auth.onAuthStateChange((ev,session)=>{if(ev==='SIGNED_OUT'){SESSION=null;updateAuthUI()}});
+  }catch(e){}
+})();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>
